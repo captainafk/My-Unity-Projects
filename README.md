@@ -1,3 +1,3 @@
 # My-Unity-Projects
 
-Stuff I did using Unity3D
+This project is done in order to convert .fbx files to simple executables which you can walk through freely.
