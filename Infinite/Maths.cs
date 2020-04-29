@@ -1,62 +1,129 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI; // Required when Using UI elements.
 
 public class Maths : MonoBehaviour
 {
     public Text mainInputField;
-	public Text scoreText;
-	public Text mathsText;
-	private float math1;
-	private float math2;
-	private float result;
-	private int score;
+    public Text scoreText;
+    public Text mathsText;
+    private float op1;
+    private float op2;
+    private float result;
 
     public void Start()
     {
-        score = 0;
-		GenerateMath();
-		scoreText.text = "Score: 0";
-		mainInputField.text = "";
+        GameMng.score = 0;
+        GenerateMath();
+        scoreText.text = "Score: 0";
+        mainInputField.text = "";
     }
-	
-	public void Update(){
-		if (mainInputField.text == result.ToString()){
-			score += 1;
-			GenerateMath();
-			scoreText.text = "Score: " + score.ToString();
-			mainInputField.text = "";
-		}
-		
-		if (Input.GetKeyDown(KeyCode.Alpha1)){
-			mainInputField.text += "1";
-		}if (Input.GetKeyDown(KeyCode.Alpha2)){
-			mainInputField.text += "2";
-		}else if (Input.GetKeyDown(KeyCode.Alpha3)){
-			mainInputField.text += "3";
-		}else if (Input.GetKeyDown(KeyCode.Alpha4)){
-			mainInputField.text += "4";
-		}else if (Input.GetKeyDown(KeyCode.Alpha5)){
-			mainInputField.text += "5";
-		}else if (Input.GetKeyDown(KeyCode.Alpha6)){
-			mainInputField.text += "6";
-		}else if (Input.GetKeyDown(KeyCode.Alpha7)){
-			mainInputField.text += "7";
-		}else if (Input.GetKeyDown(KeyCode.Alpha8)){
-			mainInputField.text += "8";
-		}else if (Input.GetKeyDown(KeyCode.Alpha9)){
-			mainInputField.text += "9";
-		}else if (Input.GetKeyDown(KeyCode.Alpha0)){
-			mainInputField.text += "0";
-		}else if (Input.GetKeyDown(KeyCode.Backspace)){
-			mainInputField.text = "";
-		}
-	}
-	
-	private void GenerateMath(){
-		math1 = Random.Range(0,10 + score * 3);
-		math2 = Random.Range(2,12 + score * 3);
-		result = math1 + math2;
-		mathsText.text = math1.ToString() + " + " + math2.ToString() + " ?";
-	}
+
+    public void Update()
+    {
+        if (mainInputField.text == result.ToString())
+        {
+            GameMng.score += 1;
+            GenerateMath();
+            scoreText.text = "Score: " + GameMng.score.ToString();
+            mainInputField.text = "";
+        }
+
+        if (GameMng.isGameRunning)
+        {
+            if (mainInputField.text.Length < 12)
+            {
+                if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
+                {
+                    mainInputField.text += "1";
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
+                {
+                    mainInputField.text += "2";
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
+                {
+                    mainInputField.text += "3";
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
+                {
+                    mainInputField.text += "4";
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha5) || Input.GetKeyDown(KeyCode.Keypad5))
+                {
+                    mainInputField.text += "5";
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha6) || Input.GetKeyDown(KeyCode.Keypad6))
+                {
+                    mainInputField.text += "6";
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha7) || Input.GetKeyDown(KeyCode.Keypad7))
+                {
+                    mainInputField.text += "7";
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha8) || Input.GetKeyDown(KeyCode.Keypad8))
+                {
+                    mainInputField.text += "8";
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha9) || Input.GetKeyDown(KeyCode.Keypad9))
+                {
+                    mainInputField.text += "9";
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha0) || Input.GetKeyDown(KeyCode.Keypad0))
+                {
+                    mainInputField.text += "0";
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Delete))
+            {
+                mainInputField.text = "";
+            }
+        }
+    }
+
+    private void GenerateMath()
+    {
+        var opSelector = UnityEngine.Random.Range(0, 3);
+
+        if (opSelector == Convert.ToDouble(Operators.sum))
+        {
+            op1 = UnityEngine.Random.Range(0, 10 + GameMng.score * 3);
+            op2 = UnityEngine.Random.Range(2, 12 + GameMng.score * 3);
+
+            result = op1 + op2;
+            mathsText.text = op1.ToString() + " + " + op2.ToString() + " = ?";
+        }
+        else if (opSelector == Convert.ToDouble(Operators.sub))
+        {
+            op2 = UnityEngine.Random.Range(0, 10 + GameMng.score * 3);
+            op1 = op2 + UnityEngine.Random.Range(0, 10 + GameMng.score * 3);
+
+            result = op1 - op2;
+            mathsText.text = op1.ToString() + " - " + op2.ToString() + " = ?";
+        }
+        else if (opSelector == Convert.ToDouble(Operators.mult))
+        {
+            op1 = UnityEngine.Random.Range(1, 1 + GameMng.score);
+            op2 = UnityEngine.Random.Range(0, 1 + GameMng.score / 5);
+
+            result = op1 * op2;
+            mathsText.text = op1.ToString() + " * " + op2.ToString() + " = ?";
+        }
+        else if (opSelector == Convert.ToDouble(Operators.div))
+        {
+            op2 = UnityEngine.Random.Range(1, 3 + GameMng.score * 3);
+            op1 = op2 * UnityEngine.Random.Range(1, 2 + GameMng.score);
+
+            result = op1 / op2;
+            mathsText.text = op1.ToString() + " / " + op2.ToString() + " = ?";
+        }
+    }
+
+    private enum Operators
+    {
+        sum,
+        sub,
+        mult,
+        div
+    }
 }

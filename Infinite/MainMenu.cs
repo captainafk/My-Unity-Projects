@@ -6,8 +6,9 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour {
 
 	public void PlayGame(){
-		
-		SceneManager.LoadScene("Game");
+
+		GameMng.health = 10;
+		SceneManager.LoadScene("Week 4");
 	}
 	
 	public void QuitGame() {
