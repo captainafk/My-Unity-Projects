@@ -7,8 +7,7 @@ public class MainMenu : MonoBehaviour {
 
 	public void PlayGame(){
 
-		GameMng.health = 10;
-		SceneManager.LoadScene("Week 4");
+		SceneManager.LoadScene("Game");
 	}
 	
 	public void QuitGame() {

@@ -22,7 +22,6 @@ public class Player2_Controller : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
             {
-                //GetComponent<Rigidbody>().velocity = Vector3.forward * jumpVelocity;
                 rb.AddForce(Vector3.forward * jumpVelocity, ForceMode.Impulse);
             }
             else

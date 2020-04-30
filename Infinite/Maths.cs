@@ -13,7 +13,7 @@ public class Maths : MonoBehaviour
 
     public void Start()
     {
-        GameMng.score = 0;
+        //GameMng.score = 0;
         GenerateMath();
         scoreText.text = "Score: 0";
         mainInputField.text = "";
@@ -74,7 +74,7 @@ public class Maths : MonoBehaviour
                     mainInputField.text += "0";
                 }
             }
-            else if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Delete))
+            if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Delete))
             {
                 mainInputField.text = "";
             }

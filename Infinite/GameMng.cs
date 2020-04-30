@@ -19,6 +19,7 @@ public class GameMng : MonoBehaviour
     private GameObject gameOverPanel;
 
     private GameObject gameOverScoreText;
+    private GameObject highScoreText;
 
     [SerializeField]
     private Canvas canvas;
@@ -26,6 +27,8 @@ public class GameMng : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        health = 10;
+        score = 0;
         isGameRunning = true;
     }
 
@@ -58,6 +61,17 @@ public class GameMng : MonoBehaviour
             // Disable the inputs when the game is over
             isGameRunning = false;
 
+            // Get the high score and update it if necessary
+            SavedData.LoadHighScore();
+
+            if (score > SavedData.highScore)
+            {
+                SavedData.highScore = score;
+                PlayerPrefs.SetInt("highScore", SavedData.highScore);
+            }
+
+            Debug.Log("High score: " + SavedData.highScore.ToString());
+
             // Instantiate gameOverPanel and set it as a child of canvas
             gameOverPanel = Instantiate(gameOverPanelPrefab,
                                         new Vector3(0, 0, 0),
@@ -69,6 +83,11 @@ public class GameMng : MonoBehaviour
             gameOverScoreText = canvas.transform.Find("GameOverPanel(Clone)").gameObject
                                       .transform.Find("GameOverScoreText").gameObject;
             gameOverScoreText.GetComponent<TMPro.TextMeshProUGUI>().text = "Score: " + score.ToString();
+
+            // Show the score when the game is over
+            highScoreText = canvas.transform.Find("GameOverPanel(Clone)").gameObject
+                                  .transform.Find("HighScoreText").gameObject;
+            highScoreText.GetComponent<TMPro.TextMeshProUGUI>().text = "High Score: " + SavedData.highScore.ToString();
 
             // Make the scale of the panel 0, then make it larger via tweening
             gameOverPanel.transform.localScale = new Vector3(0, 0, 0);

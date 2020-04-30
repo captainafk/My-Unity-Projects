@@ -4,7 +4,7 @@ public class Obstacle1 : MonoBehaviour
 {
     public int damage = 1;
 
-    public float speed = 5;
+    public float speed = 6;
 
     private void Update()
     {
@@ -15,14 +15,7 @@ public class Obstacle1 : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            //other.GetComponent<Player1_Controller>().health -= damage;
-            //Debug.Log(other.GetComponent<Player1_Controller>().health);
-
-            //GameManager.instance.health -= damage;
-            //Debug.Log(GameManager.instance.health);
-
             GameMng.health -= damage;
-            Debug.Log(GameMng.health);
             Destroy(gameObject);
         }
         else if (other.CompareTag("Wall"))
