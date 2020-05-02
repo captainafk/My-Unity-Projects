@@ -70,7 +70,8 @@ public class GameMng : MonoBehaviour
                 PlayerPrefs.SetInt("highScore", SavedData.highScore);
             }
 
-            Debug.Log("High score: " + SavedData.highScore.ToString());
+            // Play the "Game Over" sound
+            GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>().GameOver();
 
             // Instantiate gameOverPanel and set it as a child of canvas
             gameOverPanel = Instantiate(gameOverPanelPrefab,

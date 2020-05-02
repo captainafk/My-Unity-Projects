@@ -21,8 +21,10 @@ public class Maths : MonoBehaviour
 
     public void Update()
     {
+        // Correct Answer
         if (mainInputField.text == result.ToString())
         {
+            GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>().RightAnswer();
             GameMng.score += 1;
             GenerateMath();
             scoreText.text = "Score: " + GameMng.score.ToString();
